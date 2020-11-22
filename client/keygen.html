@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Generator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+</head>
+<body class="container is-max-desktop mt-6">
+    <div class="container is-max-desktop">
+        <h1 class="title">KeyGen</h1> 
+        <button class="button is-dark" id='generate'>Generate Key Pair</button>
+        <div class="columns mt-2">
+            <div class="column">
+                <p class="subtitle">Private Key</p>
+                <textarea class="textarea" id="kpr" cols="30" rows="10"></textarea>
+            </div>
+            <div class="column">
+                <p class="subtitle">Public Key</p>
+                <textarea class="textarea" id="kpub" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+   </div>
+   <script>
+       const gen = document.querySelector('#generate');
+       const pub = document.querySelector('#kpub');
+       const pr = document.querySelector('#kpr');
+       gen.onclick = () => {
+            fetch('/keygen', {
+                method: 'POST'
+            })
+            .then(resp => resp.status == 200 ? resp.json() : null)
+            .then(data => {
+                    pub.value = data.publicKey;
+                    pr.value = data.privateKey;
+            })
+       }
+   </script>
+</body>
+</html>
